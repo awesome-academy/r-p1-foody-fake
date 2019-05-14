@@ -4,5 +4,13 @@ Rails.application.routes.draw do
   get "/about", to: "static_page#about"
   get "/contact", to: "static_page#contact"
   get "/contact", to: "static_page#contact"
+  get "/signup", to: "users#new"
+  post "/signup", to: "users#create"
+  delete "/admin_delete", to: "admin/users#destroy"
+
+  resources :users
+  namespace :admin do
+    resources :users
+  end
 
 end
