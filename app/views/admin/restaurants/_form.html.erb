@@ -1,0 +1,34 @@
+<%= form_for [:admin, @restaurant] do |f| %>
+  <%= render "shared/error_messages", object: @restaurant %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name, class: "form-control" %>
+
+  <%= f.label :location %>
+  <%= f.text_field :location, class: "form-control" %>
+
+  <%= f.label :minprice %>
+  <%= f.number_field :minprice, class: "form-control" %>
+
+  <%= f.label :maxprice %>
+  <%= f.number_field :maxprice, class: "form-control" %>
+
+  <%= f.label :open_time %><br>
+  <%= f.time_field :open_time,
+      value: Settings.default_time_value,
+      min: Settings.min_time_value,
+      max: Settings.max_time_value %>
+  <%= f.label :close_time %><br>
+  <%= f.time_field :close_time,
+      value: Settings.default_time_value,
+      min: Settings.min_time_value,
+      max: Settings.max_time_value %>
+  <br>
+  <br>
+  <span class="picture">
+    <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
+  </span>
+  <br>
+
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>
