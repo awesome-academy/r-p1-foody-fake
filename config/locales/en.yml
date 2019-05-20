@@ -1,37 +1,4 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
-  title: "Hello"
   base_title: "Ruby on Rails Tutorial Sample App"
   food_delivery: "Food Delivery"
   home: "Home"
@@ -82,7 +49,7 @@ en:
   the: "The"
   by: "by"
   is_a: "is a"
-  form_containt: "The form contains"
+  form_contain: "The form contains"
   not_found: "Not found"
   new_user: "New user ?"
   invalid_login: "Invalid email/password combination"
@@ -100,15 +67,18 @@ en:
   all_users: "All users"
   you_sure: "You sure?"
   delete: "Delete"
-  success_deleted: "User deleted"
+  success_deleted: "Success deleted"
   failure_deleted: "Cannot delete"
 
   create_restaurant: "Create Restaurant"
+  edit_restaurant: "Edit restaurant"
   manage_restaurant: "Manage Restaurant"
   image_size_info: "should be less than 5MB"
   create_restaurant_success: "Create restaurant success"
+  create_restaurant_failure: "Something went wrong"
   search_restaurant: "Search Restaurant"
   search: "Search"
+  restaurant_updated: "Restaurant updated"
 
   create_food: "Create food"
   manage_food: "Manage food"
@@ -116,6 +86,39 @@ en:
   food_created_failure: "Food create failure"
   find_us: "Find us on map"
   number_of_ordered: "No. orderd"
-  add: "Add"
+  add_to_cart: "Add to cart"
   pls_log_in: "Please log in"
   submit: "Submit"
+
+  success_deleted_comment: "Deleted Comment"
+  failure_deleted_comment: "Unable to delete this comment"
+  cart: "My cart"
+  image_size_dimension_info: "Need at image at least 180x240"
+  like: "Like"
+  edit_comment: "Edit"
+  discuss: "Discuss"
+  success_order: "Order Success"
+  failure_order: "Order Fail"
+  opening: "OPENING"
+  closed: "CLOSED"
+  rating: "Rate"
+  comment: "Comment"
+  image: "Image"
+  order_and_delivery: "Order food and delivery now"
+  no_menu_res: "This restaurant doesn't have online menu"
+  login_to_continue: "Log in to continue"
+  total_of_rating: " Total of rating"
+  very_good: "very good"
+  good: " good"
+  medium: " medium"
+  bad: " bad"
+  maximum_file_size_alert: "Maximum file size is 5MB. Please choose a smaller file."
+  edit_food: "Edit food"
+  delete_food: "Delete food"
+  food_updated: "Food updated"
+  first_name: "First name"
+  last_name: "Last name"
+  country: "Country"
+  subject: "Subject"
+  total_value: "Total value"
+  order_now: "Order now"

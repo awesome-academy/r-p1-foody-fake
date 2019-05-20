@@ -1,6 +1,6 @@
-@import "bootstrap-sprockets";
-@import "bootstrap";
-@import "color";
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+@import 'color';
 
 @mixin box_sizing {
   -moz-box-sizing: border-box;
@@ -8,90 +8,54 @@
   box-sizing: border-box;
 }
 
-/* universal */
-
-body {
-  padding-top: 60px;
+.progressbar {
+    counter-reset: step;
+    margin-bottom: 100px;
 }
-
-wrapper-carousel{
-  margin-bottom: 15px;
+.progressbar li {
+    list-style-type: none;
+    width: 31%;
+    float: left;
+    font-size: 18px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    color: $progress-bar-color-gray;
 }
-contact_text_area {
-height: 200px;
+.progressbar li:before {
+    width: 30px;
+    height: 30px;
+    content: counter(step);
+    counter-increment: step;
+    line-height: 30px;
+    border: 2px solid $progress-bar-color-gray;
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    border-radius: 50%;
+    background-color: white;
 }
-.image_home{
-  width: 100%;
+.progressbar li:after {
+    width: 100%;
+    height: 2px;
+    content: '';
+    position: absolute;
+    background-color: $progress-bar-color-gray;
+    top: 15px;
+    left: -50%;
+    z-index: -1;
 }
-
-#myInput {
-  border-box: box-sizing;
-  /*background-image: url("searchicon.png");*/
- /* background-position: 14px 12px;*/
- /* background-repeat: no-repeat;*/
-  font-size: 14px;
-  padding: 8px;
-  border: none;
-  border-bottom: 1px solid #ddd;
+.progressbar li:first-child:after {
+    content: none;
 }
-/* Affix and scroll spy*/
-body {
-  position: relative;
+.progressbar li.active {
+    color: green;
 }
-.affix {
-  top:0;
-  width: 100%;
-  z-index: 9999 !important;
+.progressbar li.active:before {
+    border-color: $progress-bar-color-green;
 }
-.navbar {
-  margin-bottom: 0px;
-}
-
-.affix ~ .container-fluid {
-  position: relative;
-  top: 50px;
-}
-
-#section1 {
-  padding-top:50px;
-  height:500px;
-  color: $section-color;
-  background-color: #1E88E5;
-}
-
-#section2 {
-  padding-top: 50px;
-  height:500px;
-  color: $section-color;
-  background-color: #673ab7;
-}
-
-#section3 {
-  padding-top:50px;
-  height:500px;
-  color: $section-color;
-  background-color: #ff9800;
-}
-
-#section41 {
-  padding-top:50px;
-  height:500px;
-  color: $section-color;
-  background-color: #00bcd4;
-}
-
-#section42 {
-  padding-top:50px;
-  height:500px;
-  color: $section-color;
-  background-color: #009688;
-}
-section {
-  overflow: auto;
-}
-
-textarea {
-  resize: vertical;
+.progressbar li.active + li:after {
+    background-color: $progress-bar-color-green;
 }
 
 body {font-family: Arial, Helvetica, sans-serif;}
@@ -100,7 +64,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 input[type=text], select, textarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid $border-input-color;
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 6px;
@@ -109,7 +73,7 @@ input[type=text], select, textarea {
 }
 
 input[type=submit] {
-  background-color: #4CAF50;
+  background-color: $background-slider;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -117,10 +81,83 @@ input[type=submit] {
   cursor: pointer;
 }
 
+
 input[type=submit]:hover {
-  background-color: #45a049;
+  background-color: $input-background-color;
+}
+body {
+  background-color: $background-color;
+}
+.restaurant-details{
+  margin-bottom: 20px;
 }
 
+.button_food {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: $button-background-color;
+  color: $button-color;
+  padding: 4px 6px 4px 6px;
+  border-top: 1px solid $border-top-color;
+  border-right: 1px solid $border-right-color;
+  border-bottom: 1px solid $border-right-color;
+  border-left: 1px solid $border-top-color;
+}
+.user_response_image {
+  height: 30px;
+  width: 30px;
+}
+.first_div{
+  margin-top: 15px;
+}
+.white-link{
+  color: white;
+}
+
+.price_text_field{
+  width: 120px;
+  color: green;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.gray-link{
+  color: gray;
+ }
+
+.red-link{
+  color: red;
+ }
+
+.response{
+
+}
+
+a{
+  text-decoration: none;
+ }
+
+/* universal */
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+.row-button{
+  margin-top: 6   0px;
+  margin-bottom: 15px;
+}
+
+textarea {
+  resize: vertical;
+}
+.quantity_text_field{
+  width: 45px !important;
+}
 .center {
   text-align: center;
   h1 {
@@ -161,13 +198,13 @@ p {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: #fff;
+  color: $logo-color;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
   &:hover {
-    color: #fff;
+    color: $logo-color;
     text-decoration: none;
   }
 }
@@ -293,7 +330,9 @@ input {
   margin-top: 8px;
   margin-left: 12px
 }
-
+.price-order-list{
+  margin-top: 15px;
+}
 /* Image slider */
 
 /* Area information */
@@ -302,3 +341,192 @@ input {
   padding: 10px;
 }
 
+.vertical_line {
+  border-left: 2px solid blue;
+  display:inline-block;
+  height: 60px;
+}
+.button-management { /* You may want to limit the selector */
+  width: 100%; /* Or any other percent */
+}
+.div_info {
+  display: inline-block;
+  width: 80px;
+}
+.mark {
+  color: green;
+  background-color: white;
+  font-size: 20px;
+}
+.rounded-image{
+  border-radius: 50%;
+}
+
+.button {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: $button-background-color;
+  color: $button-color;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid $border-top-color;
+  border-right: 1px solid $border-right-color;
+  border-bottom: 1px solid $border-right-color;
+  border-left: 1px solid $border-top-color;
+}
+
+.plabel {
+  font-size: 12px;
+}
+.point {
+  color: $logo-color;
+  background: #03ae03;
+  text-align: center;
+  border-radius: 100px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  overflow: hidden;
+  font-size: 18px;
+  float: left;
+  margin-right: 425px
+}
+.small-point {
+  color: $logo-color;
+  background: #03ae03;
+  text-align: center;
+  border-radius: 100px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  overflow: hidden;
+  font-size: 12px;
+  float: left;
+  margin-right: 425px
+}
+.aheader{
+
+}
+
+.narrow-hr{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.text-center{
+  text-align: center;
+}
+.liheader{
+  display: block;
+  font-size: 16px;
+  padding-right: 160px;
+  /*border-right: #F0F0F0 1px solid;*/
+  float: left;
+  text-align: center;
+}
+.food_item{
+  padding-right: 160px;
+}
+
+.big-textarea{
+  height: 300px;
+  width: 550px;
+}
+
+/*Slider*/
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: $background-slider;
+  cursor: pointer;
+}
+
+.row-header{
+  margin-bottom: 80px;
+}
+
+#myInput {
+  border-box: box-sizing;
+  /*background-image: url('searchicon.png');*/
+  /* background-position: 14px 12px;*/
+  /* background-repeat: no-repeat;*/
+  font-size: 14px;
+  padding: 8px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+.content-page{
+  margin-top: 60px;
+}
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: $background-slider;
+  cursor: pointer;
+}
+
+.rating-review {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  text-align: center;
+  max-height: 400px;
+  min-height: 400px;
+}
+
+.comments {
+  grid-row-start: 1;
+
+}
+
+.my-cart{
+ /* grid-row-start: 1;
+  grid-row-end: 2;*/
+  /*text-align: center;*/
+  max-height: 430px;
+  min-height: 400px;
+}
+
+.footer{
+  grid-area: footer;
+}
+
+.grid-container {
+  display: grid;
+  /*grid-template-areas:*/
+  grid-template-columns: 270px auto 270px;
+
+  grid-gap: 30px;
+  /*background-color: #2196F3;*/
+  /*padding: 10px;*/
+}
+
+.grid-container > div {
+  /*background-color: rgba(255, 255, 255, 0.8);*/
+  /*text-align: center;*/
+  /*padding: 20px 0;*/
+  /*font-size: 30px;*/
+}

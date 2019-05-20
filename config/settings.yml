@@ -1,0 +1,21 @@
+maximum_length_name: 60
+maximum_length_email: 255
+minimum_length_password: 6
+valid_email_regex: !ruby/regexp '/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i'
+items_per_page: 15
+gravatar_size: 80
+user_size: 50
+maxmimum_image_size: 5
+maximum_food_name: 140
+min_width_image: 240
+min_height_image: 180
+minimum_quantity: 0
+maximum_quantity: 15
+default_time_value: "%H:%M"
+min_time_value: "hh:mm:ss"
+max_time_value: "hh:mm:ss"
+number_of_restaurants_on_home_page: 5
+expire_hour: 2
+default_number_of_rated: 0
+number_of_round_point: 1
+default_value_order: 0

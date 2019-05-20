@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
-  belongs_to :restaurant
   belongs_to :user
-  belongs_to :comment
+  belongs_to :restaurant
+
+  scope :ordered_by_created_at, -> {order created_at: :desc}
 end

@@ -14,6 +14,9 @@ gem "sass-rails", "~> 5.0"
 
 gem "config"
 
+gem "i18n-js"
+
+gem "byebug"
 gem "bootstrap-kaminari-views"
 
 gem "kaminari"
