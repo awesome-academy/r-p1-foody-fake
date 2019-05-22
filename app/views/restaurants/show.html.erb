@@ -1,0 +1,318 @@
+<style>
+
+</style>
+<br>
+<div class="row area-info restaurant-details">
+  <div class="col-md-5">
+    <% if @restaurant.image? %>
+    <%= image_tag(@restaurant.image.url, height: "300", width: "450") %>
+    <% else %>
+    <%= image_tag("coming_soon.jpg", height: "300", width: "450") %>
+    <% end %>
+  </div>
+  <div class="col-md-7">
+    <h3><%= @restaurant.name %></h3>
+    <p style="display:inline"><span class="glyphicon glyphicon-map-marker"></span><%= @restaurant.location %>(</p><a href="#"><%= t("find_us") %></a>)
+    <h5>
+      <strong><span class="glyphicon glyphicon-time"></span>
+        <% if !@restaurant.open_time || !@restaurant.close_time%>
+          <b style="color:red"><%= t("closed") %></b>
+        <% elsif Time.now.seconds_since_midnight >= @restaurant.open_time && Time.now.seconds_since_midnight <= @restaurant.close_time %>
+          <b style="color:green"><%= t("opening") %></b>
+        <% else %>
+          <b style="color:red"><%= t("closed") %></b>
+        <% end %>
+      </strong>
+      <p style="display: inline"><%= Time.at(@restaurant.open_time).utc.strftime("%I:%M%p")%></p>
+      -
+      <p style="display: inline"><%= Time.at(@restaurant.close_time).utc.strftime("%I:%M%p")%></p>
+    </h5>
+    <p style="display:inline"><span class="glyphicon glyphicon-info-sign"></span><%= @restaurant.minprice %>-<%= @restaurant.maxprice %></p>
+    <hr>
+    <div class="div_info">
+      <p class="point">
+        <% if !@rated %>
+          <%= ("--") %>
+        <% else %>
+          <%= @restaurant.get_average_point %>
+        <% end %>
+      </p>
+    </div>
+`   <% @point_names.each do |point_name| %>
+      <div class="div_info">
+      <p class="plabel"><%= get_formatted_name point_name %></p>
+      <p class="mark">
+        <% if !@rated %>
+          <b>--</b>
+        <% else %>
+          <b><%=@restaurant.get_point point_name %></b>
+        <% end %>
+      </p>
+    </div>
+    <% end %>
+    <!-- <div class="vertical_line"></div> -->
+    <div class="div_info">
+      <p class="plabel"><%= t("comment") %></p>
+      <p class="mark"><b><%= @restaurant.number_of_commented %></b></p>
+    </div>
+  </div>
+
+</div>
+
+<% if current_user && current_user.check_type("admin") %>
+  <div class="row area-info restaurant-details">
+    <div class="col-md-4">
+      <button class="btn btn-info btn-lg button-management"><%= link_to t("edit_restaurant"), edit_admin_restaurant_path(:id => current_restaurant.id), class: "white-link" %>
+      </button>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-danger btn-lg button-management">Delete restaurant</button>
+    </div>
+  </div>
+<% elsif current_user && !current_user.check_type("manager") %>
+  <div class="row area-info">
+    <!-- <div class="col-md-3"></div> -->
+    <div class="col-md-12">
+      <div class="container-fluid">
+        <ul class="">
+          <div class="row">
+            <div class="col-md-4">
+              <li class="liheader"><b>
+                <span class="glyphicon glyphicon-comment"></span>
+                <% if current_user && !current_user.check_type("admin") %>
+                    <a class="aheader" data-toggle="modal" data-target="#commentModal"><%= t("comment") %></a>
+                  <% else %>
+                    <a class="aheader" data-toggle="modal" data-target="#loginRequestModal"> <%= t("comment") %></a>
+                  <% end %>
+                </b>
+              </li>
+            </div>
+            <div class="modal fade" id="commentModal" role="dialog">
+              <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <% if @restaurant.image? %>
+                        <%= image_tag(@restaurant.image.url, height: "200", width: "250") %>
+                        <% else %>
+                        <%= image_tag("coming_soon.jpg", height: "200", width: "250") %>
+                        <% end %>
+                        <br>
+                        <br>
+                        <p class="small-point">
+                          <% if !@restaurant.rated? %>
+                            <b>--</b>
+                          <% else %>
+                            <%= @restaurant.get_average_point %>
+                          <% end %>
+                          </p>
+                        <h5><b><%= @restaurant.name %></b></h5>
+                      </div>
+                      <div class="col-md-8">
+                        <%= form_for(@comment) do |f| %>
+                          <%= render "shared/error_messages", object: @comment %>
+                          <%= f.text_area(:content, :cols => 15, :rows => 15, placeholder: "Write something about us") %>
+                          <%= f.submit t("submit"), class: "btn btn-primary", data: { disable_with: false },:id => "submit_comment" %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal"><%= t("done") %></button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-4">
+              <li class="liheader"><b><span class="glyphicon glyphicon-picture"></span><a class="aheader" data-toggle="modal" data-target="#imageModal"> <%= t("image") %></a></b></li>
+            </div>
+            <div class="modal fade" id="imageModal" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                  </div>
+                  <div class="modal-body">
+                    <p></p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal"><%= t("done") %></button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-4">
+              <li class="liheader">
+                <b><span class="glyphicon glyphicon-star"></span>
+                  <% if current_user && !current_user.check_type("admin") %>
+                    <a class="aheader" data-toggle="modal" data-target="#ratingModal"><%= t("rating") %></a>
+                  <% else %>
+                    <a class="aheader" data-toggle="modal" data-target="#loginRequestModal"> <%= t("rating") %></a>
+                  <% end %>
+                </b>
+              </li>
+            </div>
+            <div class="modal fade" id="loginRequestModal" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                    <button class="btn btn-info"><%= link_to t("login_to_continue"), login_path %></button>
+                  </div>
+                  <div class="modal-footer">
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="modal fade" id="ratingModal" role="dialog">
+              <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <% if @restaurant.image? %>
+                        <%= image_tag(@restaurant.image.url, height: "200", width: "250") %>
+                        <% else %>
+                        <%= image_tag("coming_soon.jpg", height: "200", width: "250") %>
+                        <% end %>
+                        <br>
+                        <br>
+                        <p class="small-point">
+                          <% if !@restaurant.rated? %>
+                            <b>--</b>
+                          <% else %>
+                            <%= @restaurant.get_average_point %>
+                          <% end %>
+                        </p>
+                        <h5><b><%= @restaurant.name %></b></h5>
+                      </div>
+                      <div class="col-md-8">
+                        <%= form_for(@rating) do |f| %>
+                          <%= render "shared/error_messages", object: @rating %>
+                          <div class="row">
+                            <div class="col-md-3"> <%= f.label :quality %></div>
+                            <div class="col-md-8">
+                              <%= f.range_field(:quality_point, in: 0..10, class: "slider myRange") %>
+                            </div>
+                            <div class="col-md-1">
+                              <span class="demo"></span>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-md-3"> <%= f.label :price %></div>
+                            <div class="col-md-8">
+                              <%= f.range_field(:price_point, in: 0..10, class: "slider myRange") %>
+                            </div>
+                            <div class="col-md-1">
+                              <span class="demo"></span>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-md-3"> <%= f.label :service %></div>
+                            <div class="col-md-8">
+                              <%= f.range_field(:service_point, in: 0..10, class: "slider myRange") %>
+                            </div>
+                            <div class="col-md-1">
+                              <span class="demo"></span>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-md-3"> <%= f.label :space %></div>
+                            <div class="col-md-8">
+                              <%= f.range_field(:space_point, in: 0..10, class: "slider myRange") %>
+                            </div>
+                            <div class="col-md-1">
+                              <span class="demo"></span>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-md-3"> <%= f.label :location %></div>
+                            <div class="col-md-8">
+                              <%= f.range_field(:location_point, in: 0..10, class: "slider myRange") %>
+                            </div>
+                            <div class="col-md-1">
+                              <span class="demo"></span>
+                            </div>
+                        </div>
+                        <br>
+                        <%= f.submit t("submit"), class: "btn btn-primary", data: { disable_with: false },:id => "submit_point" %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Done</button>
+                  </div> -->
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <% if @foods.count > 0 %>
+    <h4><b><%= t("order_and_delivery") %></b></h4>
+    <hr>
+    <div class="area-info restaurant-details">
+      <% @foods.each do |food| %>
+        <% cache food do %>
+          <%= render food %>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <h4><b><%= t("no_menu_res") %></b></h4>
+    <hr>
+  <% end %>
+
+<% end %>
+<% return unless current_user && !current_user.check_type("admin") %>
+<div class="grid-container">
+  <div class="rating-review area-info">
+    <p><b><%= @restaurant.total_rating %></b><%= t("total_of_rating") %></p>
+    <hr>
+  </div>
+  <div class="comments">
+    <% if @comments.count > 0 %>
+      <%= render @comments %>
+    <% else %>
+      <div class="area-info">
+        <p>This restaurant has no comment</p>
+      </div>
+    <% end %>
+  </div>
+  <div class="my-cart area-info">
+
+  </div>
+</div>

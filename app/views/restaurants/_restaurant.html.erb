@@ -1,0 +1,19 @@
+
+<div class="col-md-4 col-sm-6">
+  <div class="single-food">
+      <div class="food-img">
+        <% if restaurant.image? %>
+          <%= image_tag(restaurant.image.url, class: "img-fluid", alt: "") %>
+        <% else %>
+          <%= image_tag("coming_soon.jpg", class: "img-fluid", alt: "") %>
+        <% end %>
+      <div class="food-content">
+        <div class="d-flex justify-content-between">
+          <h5><%= link_to restaurant.name, restaurant %></h5>
+        </div>
+        <p class="pt-3"><%= restaurant.location %></p>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,12 @@
+<h4><%= t("search_restaurant") %></h4>
+<%= form_tag(searchrestaurant_path, method: :get) do %>
+  <%= text_field_tag(:search, params[:search], placeholder: "Restaurant name") %>
+  <br>
+  <br>
+  <%= submit_tag t("search") %>
+<% end %>
+<% @restaurants.each do |restaurant| %>
+  <ul>
+    <li><%= link_to restaurant.name, restaurant_path(restaurant) %></li><br>
+  </ul>
+<% end %>

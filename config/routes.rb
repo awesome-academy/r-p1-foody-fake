@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   get "/mycart", to: "order_details#index"
   delete "/unlike_comment", to: "comment_likes#destroy"
   delete "/deleteuser", to: "admin/users#destroy"
-
+  get "/searchdistrict", to: "districts#search"
+  get "/searchward", to: "wards#search"
   resources :restaurants
   resources :users
   resources :foods
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
   resources :comment_likes
   resources :order_details
   resources :orders
+  resources :districts
 
   namespace :admin do
     resources :admins
