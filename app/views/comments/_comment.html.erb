@@ -1,0 +1,100 @@
+<div class="row">
+  <div class="area-info">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="avatar-user">
+          <% if get_avatar_url(comment.user_id) %>
+            <%= image_tag(get_avatar_url(comment.user_id), height: "60", width: "60") %>
+          <% else %>
+            <%= image_tag("coming_soon.jpg", height: "60", width: "60") %>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div data-user-name="user-name"><b><%= get_name comment.user_id %></b></div>
+        <div data-user-created-at="comment-created-at">
+          <p class="plabel"><%= comment.created_at %></p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <p data-content-commnet="content-comment" style="padding-left: 20px"><%= comment.content %></p>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <% if current_user.like_comment comment.id %>
+          <span class="glyphicon glyphicon-heart red-link"></span>
+          <%= link_to t("like"), unlike_comment_path(:comment_id => comment.id), :method=> :delete, class: "red-link" %>
+        <% else %>
+          <span class="glyphicon glyphicon-heart"></span>
+          <%= link_to t("like"), comment_likes_path(:comment_id => comment.id), :method=> :post, class: "gray-link" %>
+        <% end %>
+      </div>
+      <div class="col-md-3"><span class="glyphicon glyphicon-comment"></span> <p style="display: inline;"><%= t("dicuss") %></p></div>
+    </div>
+    <br>
+    <% for i in 0..get_response(comment.id).length - 1 do %>
+      <div class="row response">
+        <div class="col-md-1">
+          <% if get_avatar_url(get_response(comment.id)[i].user_id) %>
+            <%= image_tag(get_avatar_url(get_response(comment.id)[i].user_id), height: "30", width: "30") %>
+          <% else %>
+            <%= image_tag("coming_soon.jpg", height: "30", width: "30") %>
+          <% end %>
+        </div>
+        <div class="col-md-10">
+          <% if get_response(comment.id).length > 0 %>
+            <p><%= get_response(comment.id)[i].content %></p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="row response">
+      <div class="col-md-1">
+        <% if @avatar %>
+          <%= image_tag(@avatar, class: "user_response_image") %>
+        <% else %>
+          <%= image_tag("coming_soon.jpg", class: "user_response_image") %>
+        <% end %>
+      </div>
+      <div class="col-md-10">
+        <%= form_for(@comment) do |f| %>
+          <%= render "shared/error_messages", object: @comment %>
+          <%= f.text_area(:content, :cols => 70, :rows => 1, placeholder: "Dicuss", :id => "response_#{comment.id}", :class => "response_text_area") %>
+          <%= hidden_field_tag "comment[comment_id]", "#{comment.id}" %>
+        <% end %>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-2">
+        <% if current_user && current_user.id == comment.user_id %>
+          <button class="btn btn-info btn-block"><%= t("edit_comment") %></button>
+        <% end %>
+      </div>
+      <div class="col-md-2">
+        <% if current_user && current_user.id == comment.user_id %>
+          <button class="btn btn-danger btn-block">
+            <%= link_to t("delete"), comment, method: :delete, class: "white-link",
+              data: { confirm: t("you_sure") } %>
+          </button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+<br>
+<script type="text/javascript">
+var response_elements = document.getElementsByClassName("response_text_area");
+for (let i = 0; i < response_elements.length; i++){
+  response_elements[i].addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+      event.preventDefault();
+    // Trigger the button element with a click
+      response_elements[i].parentElement.submit();
+    }
+  });
+}
+
+</script>
