@@ -4,6 +4,15 @@
   <%= f.label :name %>
   <%= f.text_field :name, class: "form-control" %>
 
+  <%= label_tag :province %>
+  <%= select_tag :province_select, options_for_select(@provinces.map {|c| [c.name, c.provinceid]}.to_h), {class: "select_tag required", include_blank: "Select a province", :required => true} %>
+
+  <%= label_tag :district %>
+  <%= select_tag :district_select, {}, {class: "select_tag required", :required => true} %>
+
+  <%= label_tag :ward %>
+  <%= select_tag :ward_select, {}, {class: "select_tag required", :required => true} %>
+
   <%= f.label :location %>
   <%= f.text_field :location, class: "form-control" %>
 
@@ -32,3 +41,6 @@
 
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>
+<script type="text/javascript">
+
+</script>

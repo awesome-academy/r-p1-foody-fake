@@ -1,9 +1,13 @@
+
 module Admin
+
+  require "./http"
   class RestaurantsController < AdminBaseController
-     before_action :find_restaurant, only: %i(edit update)
+    before_action :find_restaurant, only: %i(edit update)
 
     def new
       @restaurant = Restaurant.new
+      @provinces = Province.first(Settings.number_of_province)
     end
 
     def create
@@ -43,7 +47,20 @@ module Admin
         open_time_formatted = Time.parse(params[:restaurant][:open_time]).seconds_since_midnight.to_i
         close_time_formatted = Time.parse(params[:restaurant][:close_time]).seconds_since_midnight.to_i
 
-        params.require(:restaurant).permit(:name, :location, :minprice, :maxprice, :image).merge(open_time: open_time_formatted, close_time: close_time_formatted)
+        provinceid, districtid, wardid = params[:province_select], params[:district_select] ,params[:ward_select]
+        specific_address = params.require(:restaurant)[:location]
+        province_name = Province.find_by(provinceid: provinceid).name
+        district_name = District.find_by(districtid: districtid).name
+        ward_name = Ward.find_by(wardid: wardid).name
+        specific_address = specific_address + ", " + ward_name + ", " + district_name + ", " + province_name
+
+        geolocation_api_url = ENV["DOMAIN_GEOLOCATION_API"] + "q="+ specific_address + "&key=" + ENV["API_KEY"]
+
+        result_from_api_call = JSON.parse(HTTParty.get(URI.parse(URI.escape(geolocation_api_url))).to_s)
+        longitude_result = result_from_api_call["results"][0]["geometry"]["lng"]
+        latitude_result = result_from_api_call["results"][0]["geometry"]["lat"]
+
+        params.require(:restaurant).permit(:name, :minprice, :maxprice, :image).merge(open_time: open_time_formatted, close_time: close_time_formatted, location: specific_address , longitude: longitude_result, latitude: latitude_result)
       end
 
       def find_restaurant

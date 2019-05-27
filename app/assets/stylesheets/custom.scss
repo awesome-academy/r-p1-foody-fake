@@ -7,7 +7,47 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+.food-name{
+  color: green;
+}
 
+.content-comment{
+  padding-left: 20px;
+}
+.total_value_text{
+  color: red;
+  font-size: 20px;
+}
+.iframe-map{
+  width: 100%;
+  height: 450px;
+}
+
+.map{
+  margin-top: 25px;
+}
+
+.red-b{
+  color:red;
+}
+
+.green-b{
+  color: green;
+}
+.select_tag{
+  background-color: white !important;
+}
+.inline-p{
+  display: inline;
+}
+.restaurant-show-image{
+  height: 200px;
+  width: 250px;
+}
+.restaurant-image{
+  height: 300px;
+  width: 450px;
+}
 .progressbar {
     counter-reset: step;
     margin-bottom: 100px;
@@ -95,8 +135,7 @@ body {
 .button_food {
   font: bold 11px Arial;
   text-decoration: none;
-  background-color: $button-background-color;
-  color: $button-color;
+  color: white;
   padding: 4px 6px 4px 6px;
   border-top: 1px solid $border-top-color;
   border-right: 1px solid $border-right-color;
@@ -118,7 +157,7 @@ body {
   width: 120px;
   color: green;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 15px;
   margin-bottom: 20px;
 }
 

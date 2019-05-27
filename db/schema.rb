@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_15_110404) do
+
+ActiveRecord::Schema.define(version: 2019_05_23_060705) do
 
   create_table "comment_likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -31,6 +32,14 @@ ActiveRecord::Schema.define(version: 2019_05_15_110404) do
     t.index ["comment_id"], name: "index_comments_on_comment_id"
     t.index ["restaurant_id"], name: "index_comments_on_restaurant_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "districts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "districtid"
+    t.string "provinceid"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "foods", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -68,6 +77,13 @@ ActiveRecord::Schema.define(version: 2019_05_15_110404) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "provinces", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "provinceid"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.float "quality_point"
     t.float "service_point"
@@ -93,6 +109,8 @@ ActiveRecord::Schema.define(version: 2019_05_15_110404) do
     t.integer "open_time"
     t.integer "close_time"
     t.bigint "manager_id"
+    t.float "longitude"
+    t.float "latitude"
     t.index ["manager_id"], name: "index_restaurants_on_manager_id"
   end
 
@@ -107,6 +125,15 @@ ActiveRecord::Schema.define(version: 2019_05_15_110404) do
     t.boolean "activated", default: false
     t.datetime "activated_at"
     t.string "type_of_user"
+  end
+
+
+  create_table "wards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "districtid"
+    t.string "wardid"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "foods", "restaurants"

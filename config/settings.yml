@@ -19,3 +19,4 @@ expire_hour: 2
 default_number_of_rated: 0
 number_of_round_point: 1
 default_value_order: 0
+number_of_province: 63

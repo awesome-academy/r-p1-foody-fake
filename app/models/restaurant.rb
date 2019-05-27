@@ -52,6 +52,10 @@ class Restaurant < ApplicationRecord
     Rating.where(restaurant_id: self.id).size
   end
 
+  def get_geolocation_embed_url
+    ENV["DOMAIN_GEOLOCATION_EMBED_MAP"] + "q=" + latitude.to_s + "," + longitude.to_s+"&key=" + ENV["API_EMBED_MAP_KEY"]
+  end
+
   def image_size
     return unless image.size > Settings.maxmimum_image_size.megabytes
     errors.add(:image, t("image_size_info"))

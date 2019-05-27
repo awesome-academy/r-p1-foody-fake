@@ -1,0 +1,131 @@
+<div class="row area-info restaurant-details">
+  <div class="col-md-5">
+    <% if @restaurant.image? %>
+    <%= image_tag(@restaurant.image.url, class: "restaurant-image") %>
+    <% else %>
+    <%= image_tag("coming_soon.jpg", class: "restaurant-image") %>
+    <% end %>
+  </div>
+  <div class="col-md-7">
+    <h3><%= @restaurant.name %></h3>
+    <p class="inline-p"><span class="glyphicon glyphicon-map-marker"></span><%= @restaurant.location %>(</p><a href="#"><%= t("find_us") %></a>)
+    <h5>
+      <strong><span class="glyphicon glyphicon-time"></span>
+        <% if !@restaurant.open_time || !@restaurant.close_time%>
+          <b class="reb-b"><%= t("closed") %></b>
+        <% elsif Time.now.seconds_since_midnight >= @restaurant.open_time && Time.now.seconds_since_midnight <= @restaurant.close_time %>
+          <b class="green-b"><%= t("opening") %></b>
+        <% else %>
+          <b class="reb-b"><%= t("closed") %></b>
+        <% end %>
+      </strong>
+      <p class="inline-p"><%= Time.at(@restaurant.open_time).utc.strftime("%I:%M%p")%></p>
+      - <p class="inline-p"><%= Time.at(@restaurant.close_time).utc.strftime("%I:%M%p")%></p>
+    </h5>
+    <p class="inline-p"><span class="glyphicon glyphicon-info-sign"></span><%= @restaurant.minprice %>-<%= @restaurant.maxprice %></p>
+    <hr>
+    <div class="div_info">
+      <p class="point">
+        <% if !@rated %>
+          <%= ("--") %>
+        <% else %>
+          <%= @average_point %>
+        <% end %>
+      </p>
+    </div>
+`   <% @point_names.each do |point_name| %>
+      <div class="div_info">
+      <p class="plabel"><%= get_formatted_name point_name %></p>
+      <p class="mark">
+        <% if !@rated %>
+          <b>--</b>
+        <% else %>
+          <b><%=@restaurant.get_point point_name, @ratings %></b>
+        <% end %>
+      </p>
+    </div>
+    <% end %>
+    <!-- <div class="vertical_line"></div> -->
+    <div class="div_info">
+      <p class="plabel"><%= t("comment") %></p>
+      <p class="mark"><b><%= @restaurant.number_of_commented %></b></p>
+    </div>
+  </div>
+</div>
+
+<div class="row area-info">
+  <!-- <div class="col-md-3"></div> -->
+  <div class="col-md-12">
+    <div class="container-fluid">
+      <ul class="">
+        <div class="row">
+          <div class="col-md-4">
+            <li class="liheader"><b>
+              <span class="glyphicon glyphicon-comment"></span>
+              <% if current_user && !current_user.check_type("admin") %>
+                  <a class="aheader" data-toggle="modal" data-target="#commentModal"><%= t("comment") %></a>
+                <% else %>
+                  <a class="aheader" data-toggle="modal" data-target="#loginRequestModal"> <%= t("comment") %></a>
+                <% end %>
+              </b>
+            </li>
+          </div>
+          <%= render "comments/comment_modal", object: @comment %>
+
+          <div class="col-md-4">
+            <li class="liheader"><b><span class="glyphicon glyphicon-picture"></span><a class="aheader" data-toggle="modal" data-target="#imageModal"> <%= t("image") %></a></b></li>
+          </div>
+
+          <div class="col-md-4">
+            <li class="liheader">
+              <b><span class="glyphicon glyphicon-star"></span>
+                <% if current_user && !current_user.check_type("admin") %>
+                  <a class="aheader" data-toggle="modal" data-target="#ratingModal"><%= t("rating") %></a>
+                <% else %>
+                  <a class="aheader" data-toggle="modal" data-target="#loginRequestModal"> <%= t("rating") %></a>
+                <% end %>
+              </b>
+            </li>
+          </div>
+          <%= render "ratings/rating_modal", object: @rating %>
+          <%= render "sessions/login_modal" %>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>
+<% if @foods.size > 0 %>
+  <h4><b><%= t("order_and_delivery") %></b></h4>
+  <hr>
+  <div class="area-info restaurant-details">
+    <% @foods.each do |food| %>
+      <% cache food do %>
+        <%= render food %>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <h4 class="area-info"><b><%= t("no_menu_res") %></b></h4>
+  <hr>
+<% end %>
+
+<% if current_user && !current_user.check_type("admin") %>
+  <div class="grid-container">
+    <div class="rating-review area-info">
+      <p><b><%= @number_of_ratings %></b><%= t("total_of_rating") %></p>
+      <hr>
+    </div>
+    <div class="comments">
+      <% if @comments.size > 0 %>
+        <%= render @comments %>
+      <% else %>
+        <div class="area-info">
+          <p><%= t("no_comment") %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<div class="map">
+  <%= content_tag(:iframe, "", src: @embed_location_map_url, class: ["iframe-map"], frameborder: 0) %>
+</div>
