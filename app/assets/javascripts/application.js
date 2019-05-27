@@ -11,13 +11,11 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery-ui
 //= require bootstrap
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
 //= require_tree
-
 //= require i18n
 //= require i18n.js
 //= require i18n/translations

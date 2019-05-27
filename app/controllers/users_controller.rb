@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-
+  include UsersHelper
+  include SessionsHelper
   before_action :logged_in_user, only: %i(index edit update)
   before_action :correct_user, only: %i(edit update)
   before_action :find_user, only: %i(show edit update destroy)
@@ -9,6 +10,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @orders = @user.orders
     return unless @user.nil?
     render "layouts/notfound"
   end
@@ -16,9 +18,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params
     if @user.save
-      @user.send_activation_email
-      flash[:info] = t("check_email")
-      redirect_to root_url
+      redirect_to login_url
     else
       render :new
     end

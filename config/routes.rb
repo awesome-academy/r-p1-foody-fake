@@ -14,12 +14,20 @@ Rails.application.routes.draw do
   delete "/deletefood", to: "manager/foods#destroy"
   delete "/deleterestaurant", to: "admin/restaurants#destroy"
   delete "/deleteuser", to: "admin/users#destroy"
-  get "/searchrestaurant", to: "restaurants#search"
+  get "/searchrestaurant", to: "admin/restaurants#search"
   get "/mycart", to: "order_details#index"
   delete "/unlike_comment", to: "comment_likes#destroy"
   delete "/deleteuser", to: "admin/users#destroy"
+  delete "/deleteorder", to: "orders#destroy"
   get "/searchdistrict", to: "districts#search"
+  get "/managerfoods", to: "manager/foods#index"
   get "/searchward", to: "wards#search"
+  get "/searchrestaurantbylocation", to: "restaurants#search_by_location"
+  get "/searchrestaurantnearme", to: "restaurants#search_near_me"
+  get "/updatestatus", to: "orders#update_status"
+  get "/getcomment", to: "comments#get_comment"
+  post "/comments/:id", to: "comments#update"
+
   resources :restaurants
   resources :users
   resources :foods

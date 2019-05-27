@@ -1,0 +1,100 @@
+<div class="row">
+  <div class="area-info">
+    <div class="row">
+      <% user_id = comment.user_id %>
+      <div class="col-md-1">
+        <div class="avatar-user">
+          <% avatar_url = get_avatar_url(user_id) %>
+          <% if avatar_url %>
+            <%= image_tag(avatar_url, class: "avatar_comment") %>
+          <% else %>
+            <%= image_tag("coming_soon.jpg", class: "avatar_comment") %>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div data-user-name="user-name"><b><%= User.find_by(id: user_id).name %></b></div>
+        <div data-user-created-at="comment-created-at">
+          <p class="plabel"><%= comment.created_at %></p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <p data-content-commnet="content-comment" class= "content-comment"><%= comment.content %></p>
+    </div>
+    <div class="row">
+      <p data-content-commnet="content-comment" class= "content-comment"><%= comment.comment_likes.all.size %> <span class="glyphicon glyphicon-heart red-link"></span></p>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <% if current_user.like_comment comment.id %>
+          <span class="glyphicon glyphicon-heart red-link"></span>
+          <%= link_to t("like"), unlike_comment_path(:comment_id => comment.id), :method=> :delete, class: "red-link", :remote => true %>
+        <% else %>
+          <span class="glyphicon glyphicon-heart"></span>
+          <%= link_to t("like"), comment_likes_path(:comment_id => comment.id), :method=> :post, class: "gray-link", :remote => true %>
+        <% end %>
+      </div>
+      <div class="col-md-3"><span class="glyphicon glyphicon-comment"></span> <p style="display: inline;"><%= t("dicuss") %></p></div>
+    </div>
+    <br>
+    <% responses = get_response(comment.id) %>
+    <% responses_length = responses.length %>
+    <% for i in 0..responses_length - 1 do %>
+      <div class="row response user-response">
+        <div class="col-md-1">
+          <% user_id = responses[i].user_id %>
+          <% avatar_url = get_avatar_url(user_id) %>
+          <% if avatar_url %>
+            <%= image_tag(avatar_url, height: "30", width: "30") %>
+          <% else %>
+            <%= image_tag("coming_soon.jpg", height: "30", width: "30") %>
+          <% end %>
+        </div>
+        <div class="col-md-10">
+          <% if responses_length > 0 %>
+            <% @user = User.find_by(id: user_id) %>
+            <%= link_to @user.name, @user %>
+            <p class="inline-p"><%=responses[i].content %></p>
+            <% if current_user && current_user.id == responses[i].user_id %>
+              <%= link_to t("x"), responses[i], method: :delete, class: "small-p delete-response-btn", data: { confirm: t("you_sure") } %>
+            <% end %>
+            <p class="small-p"><%= responses[i].created_at %></p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="row response">
+      <div class="col-md-1">
+        <% if @avatar %>
+          <%= image_tag(@avatar, class: "user_response_image") %>
+        <% else %>
+          <%= image_tag("coming_soon.jpg", class: "user_response_image") %>
+        <% end %>
+      </div>
+      <div class="col-md-10">
+        <%= form_for(@comment) do |f| %>
+          <%= render "shared/error_messages", object: @comment %>
+          <%= f.text_area(:content, :cols => 70, :rows => 1, placeholder: "Dicuss", :id => "response_#{comment.id}", :class => "response_text_area") %>
+          <%= hidden_field_tag "comment[comment_id]", "#{comment.id}" %>
+        <% end %>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-2">
+        <% condition_btn_appear = (current_user && current_user.id == comment.user_id) %>
+        <% if condition_btn_appear %>
+          <%= link_to t("edit"), "" , id: comment.id,  class: "btn btn-warning btn-block white-link edit-comment-btn", data: { toggle: "modal", target: "#commentModal" } %>
+        <% end %>
+      </div>
+      <div class="col-md-2">
+        <% if condition_btn_appear %>
+          <%= link_to t("delete"), comment, method: :delete, class: "btn btn-danger btn-block white-link", data: { confirm: t("you_sure") } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+<br>

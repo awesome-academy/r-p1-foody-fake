@@ -1,0 +1,16 @@
+<%= form_for [:manager, @food] do |f| %>
+  <%= render "shared/error_messages", object: @food %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name, class: "form-control" %>
+
+  <%= f.label :price %>
+  <%= f.number_field :price, class: "form-control" %>
+  <br>
+  <span class="picture">
+    <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
+  </span>
+  <br>
+
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>

@@ -13,7 +13,7 @@ gem "puma", "~> 3.11"
 gem "sass-rails", "~> 5.0"
 
 gem "config"
-
+gem "bootstrap-datepicker-rails"
 gem "i18n-js"
 
 gem "http"

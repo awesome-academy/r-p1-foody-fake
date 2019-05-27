@@ -7,12 +7,50 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+.search_show_user_page{
+  margin-top: 36px;
+}
+.footer-page{
+  margin-right: -28px;
+}
+.small-p{
+  font-size: 10px;
+}
+.image_preview{
+  width: 270px;
+  height: 200px;
+  margin-bottom: 15px;
+}
+.delete-response-btn{
+  float: right;
+  color: gray;
+  visibility: hidden;
+}
+.response-row{
+
+}
 .food-name{
   color: green;
 }
 
+.search_restaurant_btn{
+  margin-top: 6px;
+}
+.select_tag_home_page{
+  width: 369px;
+  float: left;
+}
+.label-tag-home-page{
+  margin-top: 18px;
+  color: white;
+}
 .content-comment{
   padding-left: 20px;
+}
+.avatar_comment{
+  height: 60px;
+  width: 60px;
 }
 .total_value_text{
   color: red;
@@ -32,7 +70,11 @@
 }
 
 .green-b{
-  color: green;
+  color: green !important;
+}
+.restaurant-image{
+  height: 300px;
+  width: 450px;
 }
 .select_tag{
   background-color: white !important;
@@ -170,7 +212,7 @@ body {
  }
 
 .response{
-
+  margin-top: 10px;
 }
 
 a{
@@ -378,6 +420,12 @@ input {
 .area-info{
   background-color: white;
   padding: 10px;
+  margin-left: -5px;
+  margin-right: -34px;
+}
+.area-info-home-page{
+  margin: 10px;
+  width: 23%;
 }
 
 .vertical_line {
@@ -449,6 +497,10 @@ input {
 .narrow-hr{
   margin-top: 0px;
   margin-bottom: 0px;
+}
+.custom-hr{
+  margin-top: 0px;
+  margin-bottom: 5px;
 }
 
 .text-center{
@@ -529,16 +581,18 @@ input {
 }
 
 .rating-review {
+  background-color: white;
+  padding: 10px;
   grid-row-start: 1;
   grid-row-end: 2;
   text-align: center;
   max-height: 400px;
+  margin-left: -17px;
   min-height: 400px;
 }
 
 .comments {
   grid-row-start: 1;
-
 }
 
 .my-cart{
@@ -556,7 +610,7 @@ input {
 .grid-container {
   display: grid;
   /*grid-template-areas:*/
-  grid-template-columns: 270px auto 270px;
+  grid-template-columns: 270px auto ;
 
   grid-gap: 30px;
   /*background-color: #2196F3;*/

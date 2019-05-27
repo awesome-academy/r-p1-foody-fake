@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :ratings, foreign_key: "user_id", dependent: :destroy
   has_many :comments, foreign_key: "user_id", dependent: :destroy
   has_many :comment_likes, foreign_key: "user_id", dependent: :destroy
+  has_many :orders, foreign_key: "user_id", dependent: :destroy
 
   attr_accessor :remember_token, :activation_token, :reset_token
 
@@ -26,7 +27,7 @@ class User < ApplicationRecord
 
   def get_restaurant
     return unless self.check_type "manager"
-    Restaurant.where(manager_id: self.id).last
+    Restaurant.find_by(manager_id: self.id)
   end
 
   def activate

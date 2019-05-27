@@ -1,0 +1,26 @@
+<h4><%= t("search_restaurant") %></h4>
+<div class="container area-info">
+  <%= form_tag(searchrestaurant_path, method: :get) do %>
+    <div class="row">
+      <div class="col-md-9">
+        <%= text_field_tag(:search, params[:search], placeholder: "Restaurant name") %>
+      </div>
+
+      <div class="col-md-3">
+        <%= submit_tag t("search"), class: "search_restaurant_btn" %>
+      </div>
+    </div>
+  <% end %>
+  <table class="table">
+    <tr>
+      <th><%= t("no.") %></th>
+      <th><%= t("name") %></th>
+      <th><%= t("location") %></th>
+      <th><%= t("average_point") %></th>
+      <th><%= t("action") %></th>
+    </tr>
+    <% @i = 1 %>
+    <%= render @restaurants %>
+  </table>
+
+</div>

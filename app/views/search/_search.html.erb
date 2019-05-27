@@ -1,0 +1,38 @@
+<form>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-1">
+      <%= label_tag :province , nil, class: "label-tag-home-page"%>
+    </div>
+    <div class="col-md-8">
+      <%= select_tag :province_select, options_for_select(@provinces.map {|c| [c.name, c.provinceid]}.to_h), {class: "select_tag select_tag_home_page required", include_blank: "Select a province", :required => true} %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-1">
+      <%= label_tag :district, nil, class: "label-tag-home-page" %>
+    </div>
+    <div class="col-md-8">
+      <%= select_tag :district_select, {}, {class: "select_tag required select_tag_home_page", :required => true} %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-1">
+      <%= label_tag :ward, nil, class: "label-tag-home-page" %>
+    </div>
+    <div class="col-md-8">
+      <%= select_tag :ward_select, {}, {class: "select_tag required select_tag_home_page", :required => true} %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-3">
+      <button type="button" class="btn btn-success btn-block" id="search_restaurant_btn"><%= t("find_restaurant") %></button>
+    </div>
+    <div class="col-md-3">
+      <button type="button" class="btn btn-success btn-block" id="near_restaurant_btn"><%= t("find_near_me") %></button>
+    </div>
+  </div>
+</form>

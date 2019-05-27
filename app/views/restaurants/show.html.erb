@@ -1,3 +1,4 @@
+<% rating_size = @ratings.size %>
 <div class="row area-info restaurant-details">
   <div class="col-md-5">
     <% if @restaurant.image? %>
@@ -8,7 +9,7 @@
   </div>
   <div class="col-md-7">
     <h3><%= @restaurant.name %></h3>
-    <p class="inline-p"><span class="glyphicon glyphicon-map-marker"></span><%= @restaurant.location %>(</p><a href="#"><%= t("find_us") %></a>)
+    <p class="inline-p"><span class="glyphicon glyphicon-map-marker"></span><%= @restaurant.location %>
     <h5>
       <strong><span class="glyphicon glyphicon-time"></span>
         <% if !@restaurant.open_time || !@restaurant.close_time%>
@@ -25,8 +26,9 @@
     <p class="inline-p"><span class="glyphicon glyphicon-info-sign"></span><%= @restaurant.minprice %>-<%= @restaurant.maxprice %></p>
     <hr>
     <div class="div_info">
+
       <p class="point">
-        <% if !@rated %>
+        <% if rating_size == 0 %>
           <%= ("--") %>
         <% else %>
           <%= @average_point %>
@@ -37,18 +39,17 @@
       <div class="div_info">
       <p class="plabel"><%= get_formatted_name point_name %></p>
       <p class="mark">
-        <% if !@rated %>
+        <% if rating_size == 0 %>
           <b>--</b>
         <% else %>
-          <b><%=@restaurant.get_point point_name, @ratings %></b>
+          <b><%=@restaurant.get_point point_name %></b>
         <% end %>
       </p>
     </div>
     <% end %>
-    <!-- <div class="vertical_line"></div> -->
     <div class="div_info">
       <p class="plabel"><%= t("comment") %></p>
-      <p class="mark"><b><%= @restaurant.number_of_commented %></b></p>
+      <p class="mark"><b><%= @comments.size %></b></p>
     </div>
   </div>
 </div>
@@ -70,7 +71,7 @@
               </b>
             </li>
           </div>
-          <%= render "comments/comment_modal", object: @comment %>
+          <%= render "comments/comment_modal", object: @comment, rating_size: rating_size %>
 
           <div class="col-md-4">
             <li class="liheader"><b><span class="glyphicon glyphicon-picture"></span><a class="aheader" data-toggle="modal" data-target="#imageModal"> <%= t("image") %></a></b></li>
@@ -95,8 +96,8 @@
   </div>
 </div>
 <% if @foods.size > 0 %>
-  <h4><b><%= t("order_and_delivery") %></b></h4>
-  <hr>
+  <h4 class="area-info"><b><%= t("order_and_delivery") %></b></h4>
+  <hr class="custom-hr">
   <div class="area-info restaurant-details">
     <% @foods.each do |food| %>
       <% cache food do %>
@@ -108,22 +109,40 @@
   <h4 class="area-info"><b><%= t("no_menu_res") %></b></h4>
   <hr>
 <% end %>
-
-<% if current_user && !current_user.check_type("admin") %>
-  <div class="grid-container">
-    <div class="rating-review area-info">
-      <p><b><%= @number_of_ratings %></b><%= t("total_of_rating") %></p>
-      <hr>
+<div class="grid-container">
+  <div class="rating-review" id="rating-review-div">
+    <p><b><%= rating_size %></b><%= t("total_of_rating") %></p>
+    <hr>
+    <% no_rating_each_category = get_number_of_ratings_each_category @ratings %>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <p class="col-md-1"><b class="green-b"><%= no_rating_each_category[0] %></b></p>
+      <p class="col-md-1"> <%= t("excellent") %></p>
     </div>
-    <div class="comments">
-      <% if @comments.size > 0 %>
-        <%= render @comments %>
-      <% else %>
-        <div class="area-info">
-          <p><%= t("no_comment") %></p>
-        </div>
-      <% end %>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <p class="col-md-1"><b><%= no_rating_each_category[1] %></b></p>
+      <p class="col-md-1"><%= t("good") %></p>
     </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <p class="col-md-1"><b><%= no_rating_each_category[2] %></b></p>
+      <p class="col-md-1"><%= t("medium") %></p>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <p class="col-md-1"><b class="red-b"><%= no_rating_each_category[3] %></b></p>
+      <p class="col-md-1"><%= t("bad") %></p>
+    </div>
+  </div>
+  <div class="comments" id="comments-div">
+    <% if @comments.size > 0 %>
+      <%= render @comments %>
+    <% else %>
+      <div class="area-info">
+        <p><%= t("no_comment") %></p>
+      </div>
+    <% end %>
   </div>
 <% end %>
 <div class="map">

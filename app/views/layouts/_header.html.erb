@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-2">
         <div class="logo-area">
-          <a href="index.html"><%= image_tag("logo/logo.png", alt: "logo") %></a>
+          <%= image_tag("logo/logo.png", alt: "logo") %>
         </div>
       </div>
       <div class="col-lg-10">
@@ -14,13 +14,22 @@
         </div>
         <div class="main-menu">
           <ul>
-            <li class="active"><%= link_to t("home"), root_path %></li>
-            <li><%= link_to t("about"), about_path %></li>
-            <li><%= link_to t("contact"), contact_path %></li>
+            <% if !logged_in? or current_user.check_type nil  %>
+              <li class="active"><%= link_to t("home"), root_path %></li>
+              <li><%= link_to t("about"), about_path %></li>
+              <li><%= link_to t("contact"), contact_path %></li>
+            <% end %>
             <% if logged_in? %>
+              <% if current_user&.check_type "admin" %>
+                <li class="active"><%= link_to t("dashboard"), admin_admins_path %></li>
+              <% end %>
               <% if current_user.check_type nil %>
                 <li><span class="glyphicon glyphicon-shopping-cart"></span><%= link_to t("mycart"), mycart_path %></li>
               <% end %>
+              <% if current_user&.check_type "manager" %>
+                <li class="active"><%= link_to t("dashboard"), manager_managers_path %></li>
+              <% end %>
+
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <%= t("account") %> <b class="caret"></b>

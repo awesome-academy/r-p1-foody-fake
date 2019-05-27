@@ -37,8 +37,10 @@
   <span class="picture">
     <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
   </span>
+  <%= f.label :preview %>
   <br>
-
+  <img id="upload_preview" class="image_preview">
+  <br>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>
 <script type="text/javascript">

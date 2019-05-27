@@ -1,0 +1,11 @@
+<tr>
+  <td><%= @i %></td>
+  <td><%= restaurant.name%></td>
+  <td><%= restaurant.location %></td>
+  <td><%= restaurant.get_average_point %></td>
+  <td>
+    <%= link_to t("edit"), edit_admin_restaurant_path(:id => restaurant.id), class: "white-link btn btn-warning btn-block" %>
+    <%= link_to t("delete"), deleterestaurant_path(:id => restaurant.id), method: :delete, class: "white-link btn btn-danger btn-block", data: { confirm: t("you_sure") } %>
+  </td>
+  <% @i = @i + 1 %>
+</tr>

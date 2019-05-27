@@ -1,9 +1,7 @@
 
 module Admin
-
-  require "./http"
   class RestaurantsController < AdminBaseController
-    before_action :find_restaurant, only: %i(edit update)
+    before_action :find_restaurant, only: %i(edit update destroy)
 
     def new
       @restaurant = Restaurant.new
@@ -21,13 +19,21 @@ module Admin
       end
     end
 
+    def show; end
+
+    def search
+      @restaurants = Restaurant.search(params[:search])
+
+    end
+
     def edit
+      @provinces = Province.first(Settings.number_of_province)
     end
 
     def update
       if @restaurant.update_attributes restaurant_params
         flash[:success] = t("restaurant_updated")
-        redirect_to @restaurant
+        redirect_to searchrestaurant_url
       else
         render :edit
       end
@@ -39,7 +45,7 @@ module Admin
       else
         flash[:danger] = t("failure_deleted")
       end
-      redirect_to restaurants_url
+      redirect_to searchrestaurant_url
     end
 
     private
@@ -57,8 +63,8 @@ module Admin
         geolocation_api_url = ENV["DOMAIN_GEOLOCATION_API"] + "q="+ specific_address + "&key=" + ENV["API_KEY"]
 
         result_from_api_call = JSON.parse(HTTParty.get(URI.parse(URI.escape(geolocation_api_url))).to_s)
-        longitude_result = result_from_api_call["results"][0]["geometry"]["lng"]
-        latitude_result = result_from_api_call["results"][0]["geometry"]["lat"]
+        longitude_result = result_from_api_call["results"][0]["geometry"]["lng"] || ""
+        latitude_result = result_from_api_call["results"][0]["geometry"]["lat"] || ""
 
         params.require(:restaurant).permit(:name, :minprice, :maxprice, :image).merge(open_time: open_time_formatted, close_time: close_time_formatted, location: specific_address , longitude: longitude_result, latitude: latitude_result)
       end

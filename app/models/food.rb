@@ -1,6 +1,8 @@
 class Food < ApplicationRecord
   belongs_to :restaurant
 
+  has_many :order_details, foreign_key: "food_id", dependent: :destroy
+
   mount_uploader :image, FoodPictureUploader
 
   validates :name, presence: true, length: { maximum: Settings.maximum_food_name }

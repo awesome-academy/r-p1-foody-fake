@@ -1,0 +1,32 @@
+<div class="container area-info">
+  <ul class="progressbar ">
+    <li><%= t("login") %></li>
+    <li class="active"><%= t("delivery_info") %></li>
+    <li ><%= t("pay") %></li>
+  </ul>
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for @order do |f| %>
+      <%= render "shared/error_messages", object: @order %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
+
+      <%= f.label :phone %>
+      <%= f.text_field :phone, class: "form-control" %>
+
+      <%= label_tag :province %>
+      <%= select_tag :province_select, options_for_select(@provinces.map {|c| [c.name, c.provinceid]}.to_h), {class: "select_tag required", include_blank: "Select a province", :required => true} %>
+
+      <%= label_tag :district %>
+      <%= select_tag :district_select, {}, {class: "select_tag required", :required => true} %>
+
+      <%= label_tag :ward %>
+      <%= select_tag :ward_select, {}, {class: "select_tag required", :required => true} %>
+
+      <%= f.label :address %>
+      <%= f.text_field :address, class: "form-control" %>
+
+      <%= f.submit t("submit"), class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
