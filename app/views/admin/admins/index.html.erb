@@ -1,12 +1,121 @@
-<div class="row row-button">
-  <div class="col-md-3">
-    <button class="btn btn-info btn-lg btn-block"><%= link_to t("create_restaurant"), new_admin_restaurant_path %>
-    </button>
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+          <div class="pull-left image">
+            <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
+            <%= gravatar_for current_user %>
+          </div>
+          <div class="pull-left info">
+            <p><%= current_user.name %></p>
+          </div>
+        </div>
+        <!-- search form -->
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+          <li class="header"><%= t("main_navigation") %></li>
+          <li class="active treeview">
+            <a href="#">
+              <i class="fa fa-dashboard"></i> <span><%= t("dashboard") %></span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class="active"><a href="#"><i class="fa fa-circle-o"></i><%= t("dashboard") %></a></li>
+
+            </ul>
+          </li>
+        </ul>
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <!-- Main content -->
+      <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+              <div class="inner">
+                <h3><%= @number_of_orders %></h3>
+
+                <p><%= t("new_orders")%></p>
+              </div>
+              <div class="icon">
+                <i class="glyphicon glyphicon-shopping-cart"></i>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+              <div class="inner">
+                <h3><%= @number_of_ratings %><sup style="font-size: 20px"></sup></h3>
+
+                <p><%= t("ratings") %></p>
+              </div>
+              <div class="icon">
+                <i class="glyphicon glyphicon-star"></i>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+              <div class="inner">
+                <h3><%= @number_of_users %></h3>
+
+                <p><%= t("user_registrations") %></p>
+              </div>
+              <div class="icon">
+                <i class="glyphicon glyphicon-registration-mark"></i>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+              <div class="inner">
+                <h3>65</h3>
+
+                <p><%= t("unique_visitors") %></p>
+              </div>
+              <div class="icon">
+                <i class="glyphicon glyphicon-briefcase"></i>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <%= link_to t("create_restaurant"), new_admin_restaurant_path, class: "btn btn-success btn-lg btn-block" %>
+          </div>
+          <div class="col-md-4">
+            <%= link_to t("manage_restaurant"), searchrestaurant_path, class: "btn btn-lg btn-warning btn-block" %>
+          </div>
+          <div class="col-md-4">
+            <%= link_to t("manage_user"), admin_users_path, class: "btn btn-lg btn-info btn-block" %>
+          </div>
+        </div>
+
+      </section>
+      <!-- /.content -->
+    </div>
+    <div class="control-sidebar-bg"></div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-3">
-    <button class="btn btn-default btn-lg btn-block"><%= link_to t("manage_restaurant"), searchrestaurant_path %>
-    </button>
-  </div>
-</div>
+</body>

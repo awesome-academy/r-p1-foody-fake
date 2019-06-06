@@ -1,0 +1,21 @@
+<% order_details.each do |order_detail| %>
+  <div class="row">
+    <div class="col-md-2">
+      <%= image_tag(get_image_from_hash(@id_to_name[order_detail.food_id]), width: "100", height: "100") %>
+    </div>
+    <div class="col-md-5">
+      <p><%= get_name_from_hash(@id_to_name[order_detail.food_id]) %></p>
+      <a href="#"><%= t("delete") %></a>
+    </div>
+    <div class="col-md-2">
+      <h5 class="price-order-list"><%= order_detail.price %></h5>
+    </div>
+    <div class="col-md-3">
+      <a class="button_food minus">-</a>
+      <%= text_field_tag "quantity", order_detail.quantity, class: "quantity_text_field"  %>
+      <a class="button_food add">+</a>
+    </div>
+  </div>
+  <hr>
+<% end %>
+

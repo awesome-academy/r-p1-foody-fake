@@ -1,0 +1,12 @@
+<div class="container area-info">
+  <table class="table">
+    <tr class="row">
+      <th class="col-md-1"><%= t("no.") %></th>
+      <th class="col-md-3"><%= t("name") %></th>
+      <th class="col-md-2"><%= t("price") %></th>
+      <th class="col-md-5"><%= t("image") %></th>
+    </tr>
+    <% @i = 1 %>
+    <%= render @foods %>
+  </table>
+</div>

@@ -1,12 +1,23 @@
 <h4><%= t("search_restaurant") %></h4>
-<%= form_tag(searchrestaurant_path, method: :get) do %>
-  <%= text_field_tag(:search, params[:search], placeholder: "Restaurant name") %>
-  <br>
-  <br>
-  <%= submit_tag t("search") %>
-<% end %>
-<% @restaurants.each do |restaurant| %>
-  <ul>
-    <li><%= link_to restaurant.name, restaurant_path(restaurant) %></li><br>
-  </ul>
-<% end %>
+<div class="container area-info">
+  <%= form_tag(searchrestaurant_path, method: :get) do %>
+    <div class="row">
+      <div class="col-md-9">
+        <%= text_field_tag(:search, params[:search], placeholder: "Restaurant name") %>
+      </div>
+      <div class="col-md-3">
+        <%= submit_tag t("search"), class: "search_restaurant_btn" %>
+      </div>
+    </div>
+  <% end %>
+
+  <table class="table">
+    <tr>
+      <th><%= t("name") %></th>
+      <th><%= t("location") %></th>
+      <th><%= t("avg") %></th>
+      <th><%= t("action") %></th>
+    </tr>
+    <%= render @restaurants %>
+  </table>
+</div>

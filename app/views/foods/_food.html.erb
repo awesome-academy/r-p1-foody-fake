@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-3">
+    <% if food.image? %>
+      <%= image_tag(food.image.url, height: "80", width: "80") %>
+    <% else %>
+      <%= image_tag("coming_soon.jpg", height: "80", width: "80") %>
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <h6><b><%= food.name %></b></h6>
+    <p><%= t("number_of_ordered") %>: <%= food.number_of_ordered %></p>
+  </div>
+  <div class="col-md-3">
+    <p></p>
+    <p></p>
+    <p class="price_text_field"><%= food.price %>d</p>
+  </div>
+  <div class="col-md-2">
+    <p></p>
+    <% if logged_in? %>
+      <%= link_to "+", mycart_path, class: "btn btn-success" %>
+    <% else %>
+      <%= link_to "+", login_path, class: "btn btn-success" %>
+    <% end %>
+  </div>
+
+</div>
+<hr>

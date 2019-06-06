@@ -1,0 +1,15 @@
+<div class="row area-info">
+  <h5><%= t("number_of_result") %> <b class="red-b"><%= @restaurants.size %></b></h5>
+</div>
+<div class="row area-info">
+  <% if !cookies.signed[:search_near_me] %>
+    <p><%= t("result_for") %><b class="green-b"><%= cookies.signed[:ward_name] %>, <%= cookies.signed[:district_name] %>, <%= cookies.signed[:province_name] %></b></p>
+  <% end %>
+</div>
+<section class="food-area section-padding">
+  <div class="container">
+    <div class="row">
+      <%= render @restaurants %>
+    </div>
+  </div>
+</section>

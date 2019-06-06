@@ -20,3 +20,5 @@ default_number_of_rated: 0
 number_of_round_point: 1
 default_value_order: 0
 number_of_province: 63
+number_of_near_restaurants: 1
+maximum_comment_content: 100

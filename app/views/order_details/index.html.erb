@@ -1,0 +1,39 @@
+<div class="container area-info">
+  <div class="row first_div">
+    <div class="col-md-8">
+      <% @foods.each do |food| %>
+        <div class="row">
+          <div class="col-md-3">
+            <% if food.image? %>
+              <%= image_tag(food.image.url, height: "80", width: "80") %>
+            <% else %>
+              <%= image_tag("coming_soon.jpg", height: "80", width: "80") %>
+            <% end %>
+          </div>
+          <div class="col-md-3">
+            <h6><b><%= food.name %></b></h6>
+            <p><%= t("number_of_ordered") %>: <%= food.number_of_ordered %></p>
+          </div>
+          <div class="col-md-6">
+            <%= render @order_detail, :id => food.id %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-3 ">
+      <% @order_details.each do |order_detail| %>
+        <div class="row">
+          <p class="col-md-2 "><b><%= order_detail.quantity %></b></p>
+          <p class="col-md-6 food-name"><%= get_name_from_hash(@id_to_name[order_detail.food_id]) %></p>
+          <p class="col-md-3"><%= order_detail.quantity * order_detail.price %>d</p>
+        </div>
+        <hr>
+      <% end %>
+      <p><%= t("total_value") %></p>
+      <h3 class="red-b"><%= @total_value %> d</h3>
+      <%= link_to t("order_now"), edit_order_path(id: get_order_id), class: "white-link btn btn-block btn-danger" %>
+    </div>
+  </div>
+</div>
+

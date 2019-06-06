@@ -1,0 +1,56 @@
+<div class="container area-info">
+   <ul class="progressbar ">
+    <li><%= t("login") %></li>
+    <li><%= t("delivery_info") %></li>
+    <li class="active"><%= t("pay") %></li>
+  </ul>
+  <div class="row">
+    <div class="col-md-6">
+      <h5><%= t("choose_payting_method") %></h5>
+      <%= link_to t("order_now"), {}, class: "btn btn-lg btn-danger", id: "order_now_btn" %>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-5 ">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <p class="col-md-3"><%= t("address") %></p>
+            <p class="col-md-5"></p>
+            <%= link_to t("edit"), edit_order_path(id: @order.id), class: "col-md-3 btn btn-info white-link" %>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p><b><%= @order.name %></b></p>
+          <p><%= @order.address %></p>
+          <p><%= @order.phone %></p>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <p class="col-md-3"><%= t("order") %></p>
+            <p class="col-md-5"></p>
+            <%= link_to t("edit"), order_details_path, class: "col-md-3 btn btn-info white-link" %>
+          </div>
+        </div>
+        <div class="panel-body">
+          <% @order_details.each do |order_detail| %>
+            <div class="row">
+              <p class="col-md-2 "><b><%= order_detail.quantity %> x</b></p>
+              <p class="col-md-6 food-name"><%= get_name_from_hash(@id_to_name[order_detail.food_id]) %></p>
+              <p class="col-md-3"><%= order_detail.quantity * order_detail.price %>d</p>
+            </div>
+            <hr>
+          <% end %>
+          <hr>
+          <div class="row">
+            <p class="col-md-3"><%= t("total_value") %></p>
+            <p class="col-md-5"></p>
+            <p class="col-md-3 total_value_text"><%= @total_value %>d</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
