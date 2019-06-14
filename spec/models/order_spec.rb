@@ -25,7 +25,13 @@ RSpec.describe Order do
     let!(:food_2) {FactoryBot.create :food, restaurant_id: restaurant_1.id}
     let!(:order_detail_1) {FactoryBot.create :order_detail, food_id: food_1.id, order_id: order_1.id}
     let!(:order_detail_2) {FactoryBot.create :order_detail, food_id: food_2.id, order_id: order_1.id, quantity: 10, price: 25000}
-    it {expect(order_1.get_total_value).to eql(394000)}
-    it {expect(order_1.get_order_details).to eq([order_detail_1, order_detail_2])}
+
+    context "get correct total value" do
+      it {expect(order_1.get_total_value).to eql(394000)}
+    end
+
+    context "get correct order details" do
+      it {expect(order_1.get_order_details).to eq([order_detail_1, order_detail_2])}
+    end
   end
 end

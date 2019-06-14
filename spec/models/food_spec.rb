@@ -11,12 +11,9 @@ RSpec.describe Food do
     it {is_expected.to have_db_column(:restaurant_id).of_type(:integer)}
   end
 
-  context "name" do
+  context "validates" do
     it {is_expected.to validate_presence_of(:name)}
     it {is_expected.to validate_length_of(:name)}
-  end
-
-  context "price" do
     it {is_expected.to validate_presence_of(:price)}
   end
 
