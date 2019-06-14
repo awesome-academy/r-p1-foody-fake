@@ -3,7 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "2.5.0"
 
-
 gem "rails", "~> 5.2.3"
 
 gem "sqlite3"
@@ -23,7 +22,7 @@ gem "byebug"
 gem "bootstrap-kaminari-views"
 
 gem "kaminari"
-gem "faker", "1.7.3"
+gem "ffaker"
 gem "carrierwave", "1.2.2"
 gem "mini_magick", "4.7.0"
 
@@ -45,11 +44,14 @@ gem "jquery-ui-rails"
 gem "bootsnap", ">= 1.1.0", require: false
 
 group :development, :test do
+  gem "database_cleaner"
+  gem "factory_bot_rails"
+  gem "shoulda-matchers", "~> 3.1"
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  gem "rspec-rails", "~> 3.8"
 end
 
 group :development do
-
   gem "web-console", ">= 3.3.0"
   gem "listen", ">= 3.0.5", "< 3.2"
 

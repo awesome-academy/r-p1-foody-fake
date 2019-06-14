@@ -7,7 +7,6 @@ class Food < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: Settings.maximum_food_name }
   validates :price, presence: true
-  validates :restaurant_id, presence: true
   validate :image_size
 
   def image_size

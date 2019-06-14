@@ -17,17 +17,6 @@ class Restaurant < ApplicationRecord
   attr_accessor :distance_from_current_user
 
   class << self
-    def search_near_me user_latitude, user_longitude
-      @restaurants = Restaurant.where.not(latitude: nil, longitude: nil)
-      distances = {}
-      @restaurants.each do |restaurant|
-        distances[restaurant.id] = calcalute_distance_with_coordinate user_latitude.to_f, user_longitude.to_f, restaurant[:latitude].to_f, restaurant[:longitude].to_f
-      end
-      sorted_distances = distances.sort_by {|_key, value| value}.to_h
-      key_restaurants = sorted_distances.first(Settings.number_of_near_restaurants).to_h.keys
-      @restaurants = Restaurant.where("id = ?", key_restaurants)
-      return @restaurants
-    end
 
     def search_by_location(province_name, district_name, ward_name)
       query_location = ward_name + ", " + district_name + ", " + province_name
@@ -40,6 +29,18 @@ class Restaurant < ApplicationRecord
       else
         Restaurant.first Settings.number_of_restaurants_on_home_page
       end
+    end
+
+    def search_near_me user_latitude, user_longitude
+      @restaurants = Restaurant.where.not(latitude: nil, longitude: nil)
+      distances = {}
+      @restaurants.each do |restaurant|
+        distances[restaurant.id] = calcalute_distance_with_coordinate user_latitude.to_f, user_longitude.to_f, restaurant[:latitude].to_f, restaurant[:longitude].to_f
+      end
+      sorted_distances = distances.sort_by {|_key, value| value}.to_h
+      key_restaurants = sorted_distances.first(Settings.number_of_near_restaurants).to_h.keys
+      @restaurants = Restaurant.where("id = ?", key_restaurants)
+      return @restaurants
     end
   end
 
@@ -73,10 +74,6 @@ class Restaurant < ApplicationRecord
     end
 
     return point_array.reduce(:+) / point_array.size.to_f
-  end
-
-  def total_rating
-    Rating.where(restaurant_id: self.id).size
   end
 
   def get_geolocation_embed_url
